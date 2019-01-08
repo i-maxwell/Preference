@@ -8,11 +8,49 @@
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
-		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
+		<key>0670E6A6-B051-48C4-BEB3-77021D1061D9</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>4469F096-5451-45C6-8251-CAE23983E297</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4469F096-5451-45C6-8251-CAE23983E297</key>
+		<array/>
+		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>0670E6A6-B051-48C4-BEB3-77021D1061D9</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>E4FABBBC-BE90-41C4-B7C6-0D63F016D060</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>E4FABBBC-BE90-41C4-B7C6-0D63F016D060</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>23C45711-BBAF-40D9-A1C3-28DBAB568480</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -36,8 +74,7 @@
 			<key>config</key>
 			<dict>
 				<key>applescript</key>
-				<string>on alfred_script(q)	if q is "Google Chrome" then		tell application "Google Chrome"			tell front window				set oldTab to active tab				set oldTabIndex to active tab index				set theTab to make new tab with properties {URL:"chrome://net-internals/#sockets"}				delay 0.2				execute theTab javascript "document.getElementById('sockets-view-flush-button').click();"				close theTab				set active tab index to oldTabIndex				reload oldTab			end tell		end tell	else if q is "QQBrowser" then		tell application "QQBrowser"			tell front window				set oldTab to active tab				set oldTabIndex to active tab index				set theTab to make new tab with properties {URL:"chrome://net-internals/#sockets"}				delay 0.2				execute theTab javascript "document.getElementById('sockets-view-flush-button').click();"
-				close theTab				set active tab index to oldTabIndex				reload oldTab			end tell		end tell	end ifend alfred_script</string>
+				<string>on alfred_script(q)	tell application "Google Chrome"		tell front window			set oldTab to active tab			set oldTabIndex to active tab index			set theTab to make new tab with properties {URL:"chrome://net-internals/#sockets"}			delay 0.2			execute theTab javascript "document.getElementById('sockets-view-flush-button').click();"			close theTab			set active tab index to oldTabIndex			reload oldTab		end tell	end tellend alfred_script</string>
 				<key>cachescript</key>
 				<false/>
 			</dict>
@@ -70,7 +107,16 @@
 				<key>runningsubtext</key>
 				<string>flush......</string>
 				<key>script</key>
-				<string>{"items": [
+				<string>#
+# Alfred Script Filter JSON format
+#
+# This example demonstrates all fields available for populating results.
+#
+# For an in-depth explanation, use the (?) help button to the bottom left.
+#
+
+cat &lt;&lt; EOB
+{"items": [
     {
         "uid": "Google Chrome",
         "title": "Google Chrome",
@@ -89,7 +135,8 @@
             "path": "/Applications/QQBrowser.app/Contents/Resources/app.icns"
         }
     }
-]}</string>
+]}
+EOB</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -99,7 +146,7 @@
 				<key>title</key>
 				<string>flush browser hosts</string>
 				<key>type</key>
-				<integer>1</integer>
+				<integer>0</integer>
 				<key>withspace</key>
 				<false/>
 			</dict>
@@ -110,6 +157,59 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>Google Chrome</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>0670E6A6-B051-48C4-BEB3-77021D1061D9</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<true/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>QQBrowser</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>E4FABBBC-BE90-41C4-B7C6-0D63F016D060</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)	tell application "QQBrowser"		tell front window			set oldTab to active tab			set oldTabIndex to active tab index			set theTab to make new tab with properties {URL:"chrome://net-internals/#sockets"}			delay 0.2			execute theTab javascript "document.getElementById('sockets-view-flush-button').click();"			close theTab			set active tab index to oldTabIndex			reload oldTab		end tell	end tellend alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>23C45711-BBAF-40D9-A1C3-28DBAB568480</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string>Alfred's Script Filter object is extremely powerful, and gives you control over the results displayed in Alfred.
@@ -119,12 +219,26 @@ Alfred 3 now supports JSON, which is the recommended format. XML is also support
 A new option now exists for Script Filters, "Alfred filters results". This allows you to return a whole list of results, let Alfred do the subsequent filtering with extreme performance. When this option is selected, your script will be called once with no argument.</string>
 	<key>uidata</key>
 	<dict>
+		<key>0670E6A6-B051-48C4-BEB3-77021D1061D9</key>
+		<dict>
+			<key>xpos</key>
+			<integer>320</integer>
+			<key>ypos</key>
+			<integer>100</integer>
+		</dict>
+		<key>23C45711-BBAF-40D9-A1C3-28DBAB568480</key>
+		<dict>
+			<key>xpos</key>
+			<integer>460</integer>
+			<key>ypos</key>
+			<integer>180</integer>
+		</dict>
 		<key>4469F096-5451-45C6-8251-CAE23983E297</key>
 		<dict>
 			<key>xpos</key>
-			<integer>330</integer>
+			<integer>460</integer>
 			<key>ypos</key>
-			<integer>100</integer>
+			<integer>50</integer>
 		</dict>
 		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
 		<dict>
@@ -134,6 +248,13 @@ A new option now exists for Script Filters, "Alfred filters results". This allow
 			<integer>110</integer>
 			<key>ypos</key>
 			<integer>100</integer>
+		</dict>
+		<key>E4FABBBC-BE90-41C4-B7C6-0D63F016D060</key>
+		<dict>
+			<key>xpos</key>
+			<integer>320</integer>
+			<key>ypos</key>
+			<integer>180</integer>
 		</dict>
 	</dict>
 	<key>version</key>
