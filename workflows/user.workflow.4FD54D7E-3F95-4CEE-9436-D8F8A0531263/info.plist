@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>go</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>00802BA4-0EE9-4FD7-B4DC-5F1EE5D948BE</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2CD6F98D-BAAF-44E8-AEB4-96CCBA58D510</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>2B798BA9-44E5-44F1-A826-88814EE2600D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>00802BA4-0EE9-4FD7-B4DC-5F1EE5D948BE</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>2CD6F98D-BAAF-44E8-AEB4-96CCBA58D510</key>
+		<array/>
+	</dict>
+	<key>createdby</key>
+	<string>murphyyang</string>
+	<key>description</key>
+	<string></string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>gz</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>34</integer>
+				<key>hotmod</key>
+				<integer>1048576</integer>
+				<key>hotstring</key>
+				<string>I</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>2B798BA9-44E5-44F1-A826-88814EE2600D</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>gz</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>load</string>
+				<key>script</key>
+				<string>$query = "{query}";
+
+$file = '/Users/murphy.yang/Documents/_.proj/ip_list.php';
+
+require_once $file;
+
+$content = file_get_contents($file);
+
+$response = '&lt;items&gt;';
+
+$keyArr = explode(" ", $query);
+foreach ($ip_list as $index =&gt; $item) {
+    $isMatch = true;
+    foreach ($keyArr as $key) {
+        if (!empty($key) &amp;&amp; strpos($item['module'], $key) === FALSE &amp;&amp; strpos($item['tag'], $key) === FALSE) {
+            $isMatch = false;
+            break;
+        }
+    }
+    $ipArr = explode("\n", $item['ip']);
+    foreach ($ipArr as $ip) {
+        $isIpMatch = true;
+        foreach ($keyArr as $key) {
+            if (!empty($key) &amp;&amp; strpos($ip, $key) === FALSE) {
+                $isIpMatch = false;
+                break;
+            }
+        }
+
+        if ($isMatch || $isIpMatch) {
+            $ip = trim($ip);
+            if (!empty($ip)) {
+                $response .= '&lt;item autocomplete = "autocompletex" uid = "' . $index . '" arg = "gz_login ' . $ip . '" &gt;' .
+                    '&lt;title &gt;' . $ip . '&lt;/title&gt;' .
+                    '&lt;subtitle &gt;Module:' . $item['module'] . ';Tag:' . $item['tag'] . '&lt;/subtitle&gt;' .
+                    '&lt;icon &gt;&lt;/icon&gt;' .
+                    '&lt;/item&gt;';
+            }
+        }
+    }
+}
+
+$response .= '&lt;/items&gt;';
+
+echo $response;</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>登录广州跳板机</string>
+				<key>title</key>
+				<string>广州跳板机</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>00802BA4-0EE9-4FD7-B4DC-5F1EE5D948BE</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(q)
+	if application "iTerm2" is running or application "iTerm" is running then
+		run script "
+			on run {q}
+				tell application \"iTerm\"
+					activate
+					try
+						select first window
+					on error
+						create window with default profile
+						select first window
+					end try
+					tell the first window
+						create tab with default profile
+						tell current session to write text q
+					end tell
+				end tell
+			end run
+		" with parameters {q}
+	else
+		run script "
+			on run {q}
+				tell application \"iTerm\"
+					activate
+					try
+						select first window
+					on error
+						create window with default profile
+						select first window
+					end try
+					tell the first window
+						tell current session to write text q
+					end tell
+				end tell
+			end run
+		" with parameters {q}
+	end if
+end alfred_script</string>
+				<key>cachescript</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>2CD6F98D-BAAF-44E8-AEB4-96CCBA58D510</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>00802BA4-0EE9-4FD7-B4DC-5F1EE5D948BE</key>
+		<dict>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>140</integer>
+		</dict>
+		<key>2B798BA9-44E5-44F1-A826-88814EE2600D</key>
+		<dict>
+			<key>xpos</key>
+			<integer>80</integer>
+			<key>ypos</key>
+			<integer>140</integer>
+		</dict>
+		<key>2CD6F98D-BAAF-44E8-AEB4-96CCBA58D510</key>
+		<dict>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>140</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
